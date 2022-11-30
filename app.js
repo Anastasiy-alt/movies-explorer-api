@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const auth = require('./middlewares/auth');
-const NotFoundError = require('./errors/NotFoundError');
+const NotFoundError404 = require('./errors/NotFoundError404');
 const cors = require('./middlewares/cors');
 const {
   login,
@@ -41,7 +41,7 @@ app.use('/', require('./routes/users'));
 app.use('/', require('./routes/movies'));
 
 app.use('*', (req, res, next) => {
-  next(new NotFoundError('Страница не найдена.'));
+  next(new NotFoundError404('Страница не найдена.'));
 });
 
 app.use(errorLogger); // подключаем логгер ошибок
