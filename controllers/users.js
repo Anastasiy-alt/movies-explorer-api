@@ -97,7 +97,7 @@ module.exports.logout = (req, res) => {
     sameSite: 'none',
     secure: true,
   });
-  res.send({ message: 'токен успешно удален из cookies' });
+  res.send({ message: 'Токен успешно удален из cookies' });
 };
 
 module.exports.getUserMe = (req, res, next) => {
