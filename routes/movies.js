@@ -11,8 +11,6 @@ const {
 router.get('/movies', getMovie);
 router.post('/movies', createMovieValid, createMovie);
 // router.delete('/movies/:movieId', movieIdValid, deleteMovie);
-//proverit
-router.put('/movies/:movieId/likes', movieIdValid, likeMovie);
-router.delete('/movies/:movieId/likes', movieIdValid, dislikeMovie);
+
 
 module.exports = router;

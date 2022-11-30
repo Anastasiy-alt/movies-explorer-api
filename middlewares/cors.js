@@ -1,8 +1,8 @@
 const allowedCors = [
-  'https://mesto.pilot.nomoredomains.icu',
-  'http://mesto.pilot.nomoredomains.icu',
-  'https://api.mesto.pilot.nomoredomains.icu',
-  'http://api.mesto.pilot.nomoredomains.icu',
+  'https://movies.anastasiya.nomoredomains.club',
+  'http://movies.anastasiya.nomoredomains.club',
+  'https://api.movies.anastasiya.nomoredomains.club',
+  'http://api.movies.anastasiya.nomoredomains.club',
   'https://localhost:3000',
   'http://localhost:3000',
 ];
