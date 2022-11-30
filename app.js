@@ -49,7 +49,7 @@ app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors());
 app.use(error);
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
