@@ -16,6 +16,7 @@ const {
 const { loginValid, createUserValid } = require('./middlewares/validator');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const error = require('./middlewares/error');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const { PORT = 3000 } = process.env;
