@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 const { celebrate, Joi } = require('celebrate');
 const validator = require('validator');
-const BadRequestError = require('../errors/BadRequestError');
+const BadRequestError = require('../errors/BadRequestError400');
 
 const loginValid = celebrate({
   body: Joi.object().keys({
@@ -25,7 +25,7 @@ const updateProfileValid = celebrate({
   }),
 });
 
-const createMovieValid = celebrate({ ///////////////
+const createMovieValid = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     link: Joi.string().required().custom((url) => {
