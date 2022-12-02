@@ -5,9 +5,25 @@ const NotFoundError404 = require('../errors/NotFoundError404');
 
 module.exports.createMovie = (req, res, next) => {
   const owner = req.user._id;
-  const { country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId } = req.body;
+  const {
+    country, director, duration, year, description,
+    image, trailer, nameRU, nameEN, thumbnail, movieId,
+  } = req.body;
 
-  Movie.create({ owner, country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId })
+  Movie.create({
+    owner,
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    nameRU,
+    nameEN,
+    thumbnail,
+    movieId,
+  })
     .then((movie) => res.send({ data: movie }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -15,36 +31,6 @@ module.exports.createMovie = (req, res, next) => {
       }
       return next(err);
     });
-};
-
-module.exports.likeMovie = (req, res, next) => {
-  Movie.findByIdAndUpdate(
-    req.params.movieId,
-    { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
-    { new: true },
-  )
-    .then((movie) => {
-      if (!movie) {
-        throw new NotFoundError404('Фильмы не найдены.');
-      }
-      res.send(movie);
-    })
-    .catch(next);
-};
-
-module.exports.dislikeMovie = (req, res, next) => {
-  Movie.findByIdAndUpdate(
-    req.params.movieId,
-    { $pull: { likes: req.user._id } }, // убрать _id из массива
-    { new: true },
-  )
-    .then((movie) => {
-      if (!movie) {
-        throw new NotFoundError404('Фильмы не найдены.');
-      }
-      res.send(movie);
-    })
-    .catch(next);
 };
 
 module.exports.getMovie = (req, res, next) => {
@@ -68,3 +54,33 @@ module.exports.deleteMovie = (req, res, next) => {
     })
     .catch(next);
 };
+
+// module.exports.likeMovie = (req, res, next) => {
+//   Movie.findByIdAndUpdate(
+//     req.params.movieId,
+//     { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
+//     { new: true },
+//   )
+//     .then((movie) => {
+//       if (!movie) {
+//         throw new NotFoundError404('Фильмы не найдены.');
+//       }
+//       res.send(movie);
+//     })
+//     .catch(next);
+// };
+
+// module.exports.dislikeMovie = (req, res, next) => {
+//   Movie.findByIdAndUpdate(
+//     req.params.movieId,
+//     { $pull: { likes: req.user._id } }, // убрать _id из массива
+//     { new: true },
+//   )
+//     .then((movie) => {
+//       if (!movie) {
+//         throw new NotFoundError404('Фильмы не найдены.');
+//       }
+//       res.send(movie);
+//     })
+//     .catch(next);
+// };

@@ -8,6 +8,5 @@ const {
 
 router.get('/users/me', getUserMe);
 router.patch('/users/me', updateProfileValid, updateProfile);
-// router.post('/signup', ); //// app
-// router.post('/signin', ); ///// app
+
 module.exports = router;

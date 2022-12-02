@@ -1,4 +1,5 @@
 const express = require('express');
+// const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -15,10 +16,12 @@ const {
 const { loginValid, createUserValid } = require('./middlewares/validator');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const error = require('./middlewares/error');
+const limiter = require('./utils/rateLimit');
 
 const app = express();
 const { PORT = 3000 } = process.env;
 
+app.use(limiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -47,6 +50,8 @@ app.use(errorLogger); // подключаем логгер ошибок
 
 app.use(errors());
 app.use(error);
+
+// app.use(helmet());
 
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
