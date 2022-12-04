@@ -1,59 +1,40 @@
 const express = require('express');
+require('dotenv').config();
 // const helmet = require('helmet');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const auth = require('./middlewares/auth');
-const NotFoundError404 = require('./errors/NotFoundError404');
 const cors = require('./middlewares/cors');
-const {
-  login,
-  createUser,
-  checkCookie,
-  logout,
-} = require('./controllers/users');
-const { loginValid, createUserValid } = require('./middlewares/validator');
+const router = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const error = require('./middlewares/error');
 const limiter = require('./utils/rateLimit');
 
 const app = express();
-const { PORT = 3000 } = process.env;
+const {
+  PORT, DATABASE_URL, MONGO_URL, NODE_ENV,
+} = require('./utils/constants');
 
+app.listen(PORT);
+mongoose.connect(NODE_ENV === 'production' ? MONGO_URL : DATABASE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+app.use(requestLogger); // подключаем логгер запросов
 app.use(limiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors);
-
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
-
-app.use(requestLogger); // подключаем логгер запросов
-
-app.post('/signin', loginValid, login);
-app.post('/signup', createUserValid, createUser);
-app.get('/checkCookie', checkCookie);
-app.get('/signout', logout);
-
 app.use(auth);
-app.use('/', require('./routes/users'));
-app.use('/', require('./routes/movies'));
-
-app.use('*', (req, res, next) => {
-  next(new NotFoundError404('Страница не найдена.'));
-});
-
-app.use(errorLogger); // подключаем логгер ошибок
-
 app.use(errors());
 app.use(error);
+app.use(router); // подключаем роуты
+app.use(errorLogger); // подключаем логгер ошибок
 
 // app.use(helmet());
-
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// app.use('/', require('./routes/users'));
+// app.use('/', require('./routes/movies'));

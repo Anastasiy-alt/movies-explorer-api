@@ -59,10 +59,13 @@ module.exports.updateProfile = (req, res, next) => {
   )
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        return next(new BadRequestError400('Некорректные данные при создании карточки.'));
+      if (err.code === 11000) {
+        next(new ConflictError409('Пользователь с данным email уже существует.'));
+      } else if (err.name === 'ValidationError') {
+        next(new BadRequestError400('Некорректные данные при создании карточки.'));
+      } else {
+        next(err);
       }
-      return next(err);
     });
 };
 

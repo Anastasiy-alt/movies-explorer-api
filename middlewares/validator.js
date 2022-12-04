@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 const { celebrate, Joi } = require('celebrate');
 const validator = require('validator');
 const BadRequestError = require('../errors/BadRequestError400');
@@ -14,7 +13,7 @@ const createUserValid = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
   }),
 });
 
@@ -27,11 +26,26 @@ const updateProfileValid = celebrate({
 
 const createMovieValid = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().custom((url) => {
+    country: Joi.string().required(),
+    director: Joi.string().required(),
+    duration: Joi.number().required(),
+    year: Joi.string().required(),
+    description: Joi.string().required(),
+    image: Joi.string().required().custom((url) => {
       if (!validator.isURL(url)) { throw new BadRequestError('Неправильный формат URL адреса'); }
       return url;
     }),
+    trailerLink: Joi.string().required().custom((url) => {
+      if (!validator.isURL(url)) { throw new BadRequestError('Неправильный формат URL адреса'); }
+      return url;
+    }),
+    thumbnail: Joi.string().required().custom((url) => {
+      if (!validator.isURL(url)) { throw new BadRequestError('Неправильный формат URL адреса'); }
+      return url;
+    }),
+    movieId: Joi.number().required(),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
   }),
 });
 

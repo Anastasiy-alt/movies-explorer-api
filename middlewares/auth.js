@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 const jwt = require('jsonwebtoken');
 const UnauthorizedError401 = require('../errors/UnauthorizedError401');
 
@@ -8,7 +7,7 @@ const handleAuthError = (next) => {
   next(new UnauthorizedError401('Необходима авторизация.'));
 };
 
-module.exports = (req, res, next) => {
+const auth = (req, res, next) => {
   const { token } = req.cookies;
   if (!token) {
     return handleAuthError(next);
@@ -20,5 +19,7 @@ module.exports = (req, res, next) => {
     return handleAuthError(next);
   }
   req.user = payload; // записываем пейлоуд в объект запроса
-  next(); // пропускаем запрос дальше
+  return (next()); // пропускаем запрос дальше
 };
+
+module.exports = auth;
