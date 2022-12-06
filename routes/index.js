@@ -7,11 +7,14 @@ const {
   checkCookie,
   logout,
 } = require('../controllers/users');
+const auth = require('../middlewares/auth');
 
 router.post('/signin', loginValid, login);
 router.post('/signup', createUserValid, createUser);
 router.get('/checkCookie', checkCookie);
 router.get('/signout', logout);
+
+router.use(auth);
 
 router.use('/', require('./users'));
 router.use('/', require('./movies'));
