@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-const auth = require('./middlewares/auth');
+// const auth = require('./middlewares/auth');
 const cors = require('./middlewares/cors');
 const router = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors);
-app.use(auth);
+// app.use(auth);
 app.use(router); // подключаем роуты
 app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors());
