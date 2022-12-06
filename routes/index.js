@@ -13,6 +13,9 @@ router.post('/signup', createUserValid, createUser);
 router.get('/checkCookie', checkCookie);
 router.get('/signout', logout);
 
+router.use('/', require('./users'));
+router.use('/', require('./movies'));
+
 router.use('*', (req, res, next) => {
   next(new NotFoundError404('Страница не найдена.'));
 });

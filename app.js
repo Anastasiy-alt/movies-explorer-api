@@ -30,10 +30,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors);
 app.use(auth);
-app.use(errors());
-app.use(error);
 app.use(router); // подключаем роуты
 app.use(errorLogger); // подключаем логгер ошибок
+app.use(errors());
+app.use(error);
 
 // app.use(helmet());
 // app.use('/', require('./routes/users'));
