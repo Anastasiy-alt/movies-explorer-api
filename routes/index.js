@@ -13,9 +13,6 @@ router.post('/signin', loginValid, login);
 router.post('/signup', createUserValid, createUser);
 router.get('/checkCookie', checkCookie);
 router.get('/signout', logout);
-// router.post('/signout', (req, res) => {
-//   res.clearCookie('jwt').send({ message: 'Выход' });
-// });
 
 router.use(auth);
 
