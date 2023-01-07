@@ -7,7 +7,7 @@ module.exports.createMovie = (req, res, next) => {
   const owner = req.user._id;
   const {
     country, director, duration, year, description,
-    image, trailer, nameRU, nameEN, thumbnail, movieId,
+    image, trailerLink, nameRU, nameEN, thumbnail, movieId,
   } = req.body;
 
   Movie.create({
@@ -18,7 +18,7 @@ module.exports.createMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailer,
+    trailerLink,
     nameRU,
     nameEN,
     thumbnail,
@@ -26,8 +26,9 @@ module.exports.createMovie = (req, res, next) => {
   })
     .then((movie) => res.send({ data: movie }))
     .catch((err) => {
+      console.dir('api', err);
       if (err.name === 'ValidationError') {
-        return next(new BadRequestError400('Некорректные данные при создании фильма.'));
+        return next(new BadRequestError400(`Некорректные данные при создании фильма. ${err.message}`));
       }
       return next(err);
     });
