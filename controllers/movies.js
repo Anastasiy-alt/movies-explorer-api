@@ -26,7 +26,6 @@ module.exports.createMovie = (req, res, next) => {
   })
     .then((movie) => res.send({ data: movie }))
     .catch((err) => {
-      console.dir('api', err);
       if (err.name === 'ValidationError') {
         return next(new BadRequestError400(`Некорректные данные при создании фильма. ${err.message}`));
       }
@@ -35,7 +34,8 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.getMovie = (req, res, next) => {
-  Movie.find({})
+  const owner = req.user._id;
+  Movie.find({ owner })
     .then((movie) => {
       res.send(movie);
     })
