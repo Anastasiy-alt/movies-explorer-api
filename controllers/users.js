@@ -92,13 +92,14 @@ module.exports.login = (req, res, next) => {
           },
         });
       // res
-      // .send({
-      //   data: {
-      //     name: user.name,
-      //     email: user.email,
-      //     _id: user._id,
-      //   },
-      // })
+      //   .send({
+      //     data: {
+      //       name: user.name,
+      //       email: user.email,
+      //       _id: user._id,
+      //     },
+      //   })
+      //   .send({ token });
     })
     .catch(next);
 };
