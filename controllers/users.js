@@ -80,17 +80,11 @@ module.exports.login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       res.cookie('jwt', token, {
-        httpOnly: true,
+        // httpOnly: true,
         sameSite: 'none',
         secure: true,
       })
-        .send({ token }, {
-          data: {
-            name: user.name,
-            email: user.email,
-            _id: user._id,
-          },
-        });
+        .send({ token });
       // res
       //   .send({
       //     data: {
