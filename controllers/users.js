@@ -76,31 +76,41 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      res.cookie('token', token, {
+      res.cookie('jwt', token, {
         httpOnly: true,
         sameSite: 'none',
         secure: true,
-      });
-      res.send({
-        data: {
-          name: user.name,
-          email: user.email,
-          _id: user._id,
-        },
-      });
+      })
+        .send({ token }, {
+          data: {
+            name: user.name,
+            email: user.email,
+            _id: user._id,
+          },
+        });
+      // res
+      // .send({
+      //   data: {
+      //     name: user.name,
+      //     email: user.email,
+      //     _id: user._id,
+      //   },
+      // })
     })
     .catch(next);
 };
 
 module.exports.logout = (req, res) => {
-  res.clearCookie('token', {
-    sameSite: 'none',
-    secure: true,
-  });
-  res.send({ message: 'Токен успешно удален из cookies' });
+  res.clearCookie('jwt').send({ message: 'Токен успешно удален из cookies' });
+  // , {
+  //   sameSite: 'none',
+  //   secure: true,
+  // }
+  // );
+  // res.send({ message: 'Токен успешно удален из cookies' });
 };
 
 module.exports.getUserMe = (req, res, next) => {
