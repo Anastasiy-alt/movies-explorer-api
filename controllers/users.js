@@ -76,10 +76,10 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
         { expiresIn: '7d' },
       );
-      res.cookie('jwt', token, {
+      res.cookie('token', token, {
         httpOnly: true,
         sameSite: 'none',
         secure: true,
@@ -105,13 +105,11 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Токен успешно удален из cookies' });
-  // , {
-  //   sameSite: 'none',
-  //   secure: true,
-  // }
-  // );
-  // res.send({ message: 'Токен успешно удален из cookies' });
+  res.clearCookie('token', {
+    sameSite: 'none',
+    secure: true,
+  });
+  res.send({ message: 'Токен успешно удален из cookies' });
 };
 
 module.exports.getUserMe = (req, res, next) => {
