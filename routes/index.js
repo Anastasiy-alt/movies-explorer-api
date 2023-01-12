@@ -12,7 +12,7 @@ const auth = require('../middlewares/auth');
 router.post('/signin', loginValid, login);
 router.post('/signup', createUserValid, createUser);
 router.get('/checkCookie', checkCookie);
-router.get('/signout', logout);
+router.post('/signout', logout);
 
 router.use(auth);
 
