@@ -5,7 +5,6 @@ const {
   login,
   createUser,
   checkCookie,
-  logout,
 } = require('../controllers/users');
 const auth = require('../middlewares/auth');
 
@@ -18,6 +17,10 @@ router.use(auth);
 
 router.use('/', require('./users'));
 router.use('/', require('./movies'));
+
+router.post('/signout', (req, res) => {
+  res.clearCookie('jwt').send({ message: 'Выход' });
+});
 
 router.use('*', (req, res, next) => {
   next(new NotFoundError404('Страница не найдена.'));

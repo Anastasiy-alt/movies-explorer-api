@@ -89,6 +89,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
+
   res.cookie('jwt', 'token', { httpOnly: true, sameSite: 'none', secure: true })
     .send({ message: 'Токен успешно удален из cookies' });
 };
