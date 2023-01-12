@@ -80,32 +80,18 @@ module.exports.login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       res.cookie('jwt', token, {
-        // httpOnly: true,
+        httpOnly: true,
         sameSite: 'none',
         secure: true,
-      })
-        .send({ token });
-      // res
-      //   .send({
-      //     data: {
-      //       name: user.name,
-      //       email: user.email,
-      //       _id: user._id,
-      //     },
-      //   })
-      //   .send({ token });
+      }).send({ token });
     })
     .catch(next);
 };
 
 module.exports.logout = (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Токен успешно удален из cookies' });
-  // , {
-  //   sameSite: 'none',
-  //   secure: true,
-  // }
-  // );
-  // res.send({ message: 'Токен успешно удален из cookies' });
+
+  res.cookie('jwt', 'token', { httpOnly: true, sameSite: 'none', secure: true })
+    .send({ message: 'Токен успешно удален из cookies' });
 };
 
 module.exports.getUserMe = (req, res, next) => {
