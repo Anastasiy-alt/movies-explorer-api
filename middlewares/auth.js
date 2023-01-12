@@ -8,7 +8,7 @@ const handleAuthError = (next) => {
 };
 
 const auth = (req, res, next) => {
-  const { token } = req.cookies;
+  const { token } = req.cookies.jwt;
   if (!token) {
     return handleAuthError(next);
   }
