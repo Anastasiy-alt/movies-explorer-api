@@ -26,7 +26,7 @@ module.exports.createUser = (req, res, next) => {
       name: req.body.name,
     }))
     .then(() => res.send({
-      name, email,
+      name, email, password,
     }))
     .catch((err) => {
       if (err.code === 11000) {
