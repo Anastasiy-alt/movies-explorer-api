@@ -83,21 +83,20 @@ module.exports.login = (req, res, next) => {
         httpOnly: true,
         sameSite: 'none',
         secure: true,
-      }).send({ token });
+      }).send({ token, user });
     })
     .catch(next);
 };
 
 module.exports.logout = (req, res) => {
-
-  res.cookie('jwt', 'token', { httpOnly: true, sameSite: 'none', secure: true })
+  res.clearCookie('jwt', 'token', { httpOnly: true, sameSite: 'none', secure: true })
     .send({ message: 'Токен успешно удален из cookies' });
 };
 
 module.exports.getUserMe = (req, res, next) => {
-  const { _id } = req.user;
+  // const { _id } = req.user;
   User
-    .findById(_id)
+    .findById(req.user._id)
     .then((user) => {
       if (!user) {
         throw new NotFoundError404('Нет пользователя с таким id.');

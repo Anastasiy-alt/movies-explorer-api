@@ -5,6 +5,7 @@ const {
   login,
   createUser,
   checkCookie,
+  logout,
 } = require('../controllers/users');
 const auth = require('../middlewares/auth');
 
