@@ -8,11 +8,11 @@ require('dotenv').config();
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-module.exports.getUser = (req, res, next) => {
-  User.find({})
-    .then((user) => res.status(200).send(user))
-    .catch(next);
-};
+// module.exports.getUser = (req, res, next) => {
+//   User.find({})
+//     .then((user) => res.status(200).send(user))
+//     .catch(next);
+// };
 
 module.exports.createUser = (req, res, next) => {
   const {
@@ -79,11 +79,7 @@ module.exports.login = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      res.cookie('jwt', token, {
-        httpOnly: true,
-        sameSite: 'none',
-        secure: true,
-      }).send({ token, user });
+      res.send({ token, user });
     })
     .catch(next);
 };
@@ -94,7 +90,6 @@ module.exports.logout = (req, res) => {
 };
 
 module.exports.getUserMe = (req, res, next) => {
-  // const { _id } = req.user;
   User
     .findById(req.user._id)
     .then((user) => {

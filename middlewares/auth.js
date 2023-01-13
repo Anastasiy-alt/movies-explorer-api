@@ -8,7 +8,9 @@ const handleAuthError = (next) => {
 };
 
 const auth = (req, res, next) => {
-  const { token } = req.cookies;
+  const { authorization } = req.headers;
+  const token = authorization.replace('Bearer ', '');
+  // const { token } = req.cookies;
   if (!token) {
     return handleAuthError(next);
   }
