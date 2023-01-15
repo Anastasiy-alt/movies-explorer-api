@@ -4,14 +4,13 @@ const BadRequestError400 = require('../errors/BadRequestError400');
 const NotFoundError404 = require('../errors/NotFoundError404');
 
 module.exports.createMovie = (req, res, next) => {
-  const owner = req.user._id;
   const {
     country, director, duration, year, description,
     image, trailerLink, nameRU, nameEN, thumbnail, movieId,
   } = req.body;
 
   Movie.create({
-    owner,
+    owner: req.user._id,
     country,
     director,
     duration,
