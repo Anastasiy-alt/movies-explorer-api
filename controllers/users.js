@@ -85,7 +85,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  res.clearCookie('jwt', { httpOnly: true, sameSite: 'none', secure: true })
+  res.clearCookie('jwt', 'token', { httpOnly: true, sameSite: 'none', secure: true })
     .send({ message: 'Токен успешно удален из cookies' });
 };
 
@@ -101,9 +101,9 @@ module.exports.getUserMe = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.checkCookie = (req, res) => {
-  if (!req.cookies.token) {
-    return res.send('false');
-  }
-  return res.send('true');
-};
+// module.exports.checkCookie = (req, res) => {
+//   if (!req.cookies.token) {
+//     return res.send('false');
+//   }
+//   return res.send('true');
+// };
